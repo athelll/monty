@@ -41,4 +41,6 @@ extern stack_t *STACK;
 
 /** function declarations **/
 int file_parser (FILE *file);
+int getline(char **content, size_t *len, FILE *file);
+
 #endif
