@@ -57,8 +57,8 @@ bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
 void tokenizer (char *string, int *start, int *end, bool (*func) (char *, int));
-int execute(command cmd, int line_number);
 char *get_task_details(char *line, int len, int start);
+int execute(command task, int line_number);
 
 /** error handlers **/
 void malloc_error();
