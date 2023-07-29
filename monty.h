@@ -56,7 +56,9 @@ int getline(char **content, size_t *len, FILE *file);
 bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
-void tokenizer (char *string, int index, int *start, int *end, bool (*func) (char *, int));
+void tokenizer (char *string, int *start, int *end, bool (*func) (char *, int));
+int execute(command cmd, int line_number);
+char *get_task_details(char *line, int len, int start);
 
 /** error handlers **/
 void malloc_error();

@@ -1,15 +1,28 @@
 #include "monty.h"
 
+char *get_task_details(char *line, int len, int start)
+{
+	char *detail;
+	int index = 0;
+
+	detail = malloc(len + 1);
+	if (!detail) { malloc_error(); }
+
+	while (index < len)
+		detail[index++] = line[start++];
+	detail[index] = '\0';
+
+	return (detail);
+}
+
 int parser (FILE *file)
 {
-	size_t len;
 	char *line_content;
-	int line_counter = 1, index = 0;
+	size_t line_counter = 1, len;
 	int opcode_start = -1, opcode_end = -1;
 	int value_start = -1, value_end = -1;
-	char *opcode , *value;
 	int opcode_len; int value_len;
-	command current_command;
+	command task;
 
 	while (getline(&line_content, &len, file) != EOF)
 	{
@@ -19,8 +32,8 @@ int parser (FILE *file)
 			continue;
 		}
 
-		tokenizer(line_content, index, &opcode_start, &opcode_end, is_alpha);
-		tokenizer(line_content, index, &value_start, &value_end, is_number);
+		tokenizer(line_content, &opcode_start, &opcode_end, is_alpha);
+		tokenizer(line_content, &value_start, &value_end, is_number);
 
 		if (opcode_start == -1 && value_start == -1)
 			continue;
@@ -29,40 +42,20 @@ int parser (FILE *file)
 		value_len = value_start != -1 ? (value_end - value_start) + 1 : 0;
 
 		if (opcode_len != 0)
-		{
-			opcode = malloc(opcode_len + 1);
-			if (!opcode) { malloc_error(); }
-
-			index = 0;
-			while (index < opcode_len)
-				opcode[index++] = line_content[opcode_start++];
-			opcode[index] = '\0';
-			current_command.opcode = opcode;
-		}
+			task.opcode = get_task_details(line_content, opcode_len, opcode_start);
 		else
-			current_command.opcode = NULL;
+			task.opcode = NULL;
 
 		if (value_len != 0)
-		{
-			value = malloc(value_len + 1);
-			if (!value) { malloc_error(); }
-
-			index = 0;
-			while (index < value_len)
-				value[index++] = line_content[value_start++];
-			value[index] = '\0';
-			current_command.value = value;
-		}
+			task.value = get_task_details(line_content, value_len, value_start);
 		else
-			current_command.value = NULL;
+			task.value = NULL;
 
-		/** execute(current_command, line_number); **/
-		printf("[%d]: opcode: %s, value: %s\n",line_counter, current_command.opcode, current_command.value);
+		execute(task, line_counter);
 
-		/** reset **/
-		opcode_start = opcode_end = value_start = value_end = -1;
-		index = 0;
 		line_counter++;
+		opcode_start = opcode_end = value_start = value_end = -1; /** reset **/
 	}
+
 	return (EXIT_SUCCESS);
 }
