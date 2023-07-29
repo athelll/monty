@@ -24,12 +24,18 @@ int parser (FILE *file)
 	int line_counter = 1, index = 0;
 	int opcode_start = -1, opcode_end = -1;
 	int value_start = -1, value_end = -1;
+	char *opcode , *value;
 	command current;
 
 	while (getline(&line_content, &len, file) != EOF)
 	{
 		index = tokenizer(line_content, index, &opcode_start, &opcode_end, is_alpha);
 		index = tokenizer(line_content, index, &value_start, &value_end, is_number);
+
+		opcode = malloc((opcode_end - opcode_start) + 2);
+		value = malloc((value_end - value_start) + 2);
+		if (!opcode || !value)
+			malloc_error();
 
 		printf("\nopcode_start: %d, opcode_end: %d\n", opcode_start, opcode_end);
 		printf("value_start: %d, value_end: %d\n", value_start, value_end);

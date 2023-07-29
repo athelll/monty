@@ -42,7 +42,7 @@ typedef struct instruction_s
 
 typedef struct commands
 {
-	int *value;
+	int value;
 	char *opcode;
 } command;
 
@@ -57,5 +57,11 @@ bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
 int tokenizer (char *string, int index, int *start, int *end, bool (*func) (char *, int));
+
+/** error handlers **/
+void malloc_error();
+void usage_error();
+void notmonty_error();
+void file_error(char *file);
 
 #endif
