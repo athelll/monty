@@ -51,10 +51,11 @@ extern stack_t *stack;
 
 /** function declarations **/
 stack_t *init_stack(void);
-int file_parser (FILE *file);
+int parser (FILE *file);
 int getline(char **content, size_t *len, FILE *file);
 bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
+int tokenizer (char *string, int index, int *start, int *end, bool (*func) (char *, int));
 
 #endif

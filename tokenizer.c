@@ -1,6 +1,24 @@
 #include "monty.h"
+int tokenizer (char *string, int index, int *start, int *end, bool (*func) (char *, int))
+{
+	for (; string[index] != '\0'; index++)
+		if (func(string, index))
+		{
+			*start = index;
+			break;
+		}
 
-int file_parser (FILE *file)
+	for (; string[index] != '\0'; index++)
+		if (func(string, index + 1) == false)
+		{
+			*end = index;
+			break;
+		}
+
+	return (index);
+}
+
+int parser (FILE *file)
 {
 	size_t len;
 	char *line_content;
@@ -11,39 +29,15 @@ int file_parser (FILE *file)
 
 	while (getline(&line_content, &len, file) != EOF)
 	{
-		for (; line_content[index] != '\0'; index++)
-			if (is_alpha(line_content, index))
-			{
-				opcode_start = index;
-				break;
-			}
-
-		for (; line_content[index] != '\0'; index++)
-			if (is_alpha(line_content, index + 1) == false)
-			{
-				opcode_end = index;
-				break;
-			}
-
-		for (; line_content[index] != '\0'; index++)
-			if (is_number(line_content, index))
-			{
-				value_start = index;
-				break;
-			}
-
-		for (; line_content[index] != '\0'; index++)
-			if (is_number(line_content, index + 1) == false)
-			{
-				value_end = index;
-				break;
-			}
+		index = tokenizer(line_content, index, &opcode_start, &opcode_end, is_alpha);
+		index = tokenizer(line_content, index, &value_start, &value_end, is_number);
 
 		printf("\nopcode_start: %d, opcode_end: %d\n", opcode_start, opcode_end);
 		printf("value_start: %d, value_end: %d\n", value_start, value_end);
 
 		/** reset indexes for next line **/
 		opcode_start = opcode_end = value_end = value_start =  index = 0;
+		line_counter++;
 	}
 
 	putchar((char) 10);

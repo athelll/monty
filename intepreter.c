@@ -28,7 +28,7 @@ int main (int argc, char **argv)
 		fprintf(stderr, "Error: Can't open file <file>\n");
 		exit(EXIT_FAILURE);
 	}
-	if (file_parser(file_pointer) == EXIT_FAILURE)
+	if (parser(file_pointer) == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 
 	free(stack);
