@@ -4,7 +4,13 @@ int main (int argc, char **argv)
 {
 	char *file;
 	FILE *file_pointer;
+	stack_t *stack = malloc(sizeof(stack_t) * MAX_STACK);
 
+	if (!stack)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -25,6 +31,7 @@ int main (int argc, char **argv)
 	if (file_parser(file_pointer) == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 
+	free(stack);
 	fclose(file_pointer);
 	return(EXIT_SUCCESS);
 }

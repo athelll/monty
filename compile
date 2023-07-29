@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+case $1 in
+  "-test")
+    gcc *.c -std=c89 -o monty-beta ;;
+  *)
+    gcc -Wall -Werror -Wextra -pedantic -std=c89 *.c -o monty ;;
+esac

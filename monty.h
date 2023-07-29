@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+
+/** CONSTANTS **/
+#define MAX_STACK 100
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -36,11 +40,21 @@ typedef struct instruction_s
   void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+typedef struct commands
+{
+	int *value;
+	char *opcode;
+} command;
+
 /** Global stack variable pointer **/
-extern stack_t *STACK;
+extern stack_t *stack;
 
 /** function declarations **/
+stack_t *init_stack(void);
 int file_parser (FILE *file);
 int getline(char **content, size_t *len, FILE *file);
+bool is_alpha (char *string, int index);
+bool is_number (char *string, int index);
+bool is_space (char *string, int index);
 
 #endif
