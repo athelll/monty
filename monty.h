@@ -42,7 +42,7 @@ typedef struct instruction_s
 
 typedef struct commands
 {
-	int value;
+	char *value;
 	char *opcode;
 } command;
 
@@ -56,12 +56,13 @@ int getline(char **content, size_t *len, FILE *file);
 bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
-int tokenizer (char *string, int index, int *start, int *end, bool (*func) (char *, int));
+void tokenizer (char *string, int index, int *start, int *end, bool (*func) (char *, int));
 
 /** error handlers **/
 void malloc_error();
 void usage_error();
 void notmonty_error();
 void file_error(char *file);
+void syntax_error(int line, char *opcode);
 
 #endif

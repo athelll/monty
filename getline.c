@@ -27,7 +27,7 @@ int getline(char **content, size_t *len, FILE *file)
 	string[counter++] = '\n';
 	string[counter++] = '\0';
 	*content = string;
-	*len = size + 2;
+	*len = size == 0 ? 0 : size + 2;
 
 	return (EXIT_SUCCESS);
 }

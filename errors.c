@@ -23,3 +23,9 @@ void file_error(char *file)
 	fprintf(stderr, "Error: Can't open file %s\n", file);
 	exit(EXIT_FAILURE);
 }
+
+void syntax_error(int line, char *opcode)
+{
+	fprintf(stderr, "L%d: unknown instruction %s\n", line, opcode);
+	exit(EXIT_FAILURE);
+}
