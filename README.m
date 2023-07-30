@@ -26,3 +26,6 @@ there-by making reading faster. but in the current implementation its doesn't do
    1) it can find if a line began with a number and can determine the next action to do with that ( throw error? )
    cons:
    1) theoretically slower but almost unoticeable.
+
+push hard 10
+monty                                                20

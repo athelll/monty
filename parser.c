@@ -1,5 +1,13 @@
 #include "monty.h"
 
+int get_trash(char *line, int index)
+{
+	for(; line[index] != '\0'; index++)
+		if (is_alpha(line, index))
+			return (index);
+	return (-1); /** no middle trash found **/
+}
+
 char *get_task_details(char *line, int len, int start)
 {
 	char *detail;
@@ -18,10 +26,11 @@ char *get_task_details(char *line, int len, int start)
 int parser (FILE *file)
 {
 	char *line_content;
-	size_t line_counter = 1, index = 0, len;
+	size_t line_counter = 1, index = 0;
 	int opcode_start = -1, opcode_end = -1;
 	int value_start = -1, value_end = -1;
-	int opcode_len; int value_len;
+	int opcode_len, value_len;
+	size_t len; int trash_index;
 	command task;
 
 	while (getline(&line_content, &len, file) != EOF)
@@ -30,8 +39,12 @@ int parser (FILE *file)
 		{ line_counter++; continue; }
 
 		tokenizer(line_content, &opcode_start, &opcode_end, &index, is_alpha);
+		trash_index = index;
 		tokenizer(line_content, &value_start, &value_end, &index, is_number);
-		index = 0;
+
+		trash_index = get_trash(line_content, trash_index);
+		if (trash_index != -1 && trash_index < value_start)
+		{ value_start = -1; value_end = -1; }
 
 		if (opcode_start == -1 && value_start == -1)
 		{ line_counter++; continue; }
@@ -43,14 +56,13 @@ int parser (FILE *file)
 			task.opcode = get_task_details(line_content, opcode_len, opcode_start);
 		else
 			task.opcode = NULL;
-
 		if (value_len != 0)
 			task.value = get_task_details(line_content, value_len, value_start);
 		else
 			task.value = NULL;
 
 		execute(task, line_counter);
-
+		index = 0;
 		line_counter++;
 		opcode_start = opcode_end = value_start = value_end = -1; /** reset **/
 	}
