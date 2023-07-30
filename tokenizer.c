@@ -1,19 +1,17 @@
 #include "monty.h"
 
-void tokenizer (char *string, int *start, int *end, bool (*func) (char *, int))
+void tokenizer (char *string, int *start, int *end, size_t *index, bool (*func) (char *, int))
 {
-	int index = 0;
-
-	for (; string[index] != '\0'; index++)
-		if (func(string, index))
+	for (; string[*index] != '\0'; (*index)++)
+		if (func(string, *index))
 		{
-			*start = index;
+			*start = *index;
 			break;
 		}
-	for (; string[index] != '\0'; index++)
-		if (func(string, index + 1) == false)
+	for (; string[*index] != '\0'; (*index)++)
+		if (func(string, *index + 1) == false)
 		{
-			*end = index;
+			*end = *index;
 			break;
 		}
 }

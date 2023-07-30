@@ -18,7 +18,7 @@ char *get_task_details(char *line, int len, int start)
 int parser (FILE *file)
 {
 	char *line_content;
-	size_t line_counter = 1, len;
+	size_t line_counter = 1, index = 0, len;
 	int opcode_start = -1, opcode_end = -1;
 	int value_start = -1, value_end = -1;
 	int opcode_len; int value_len;
@@ -27,16 +27,14 @@ int parser (FILE *file)
 	while (getline(&line_content, &len, file) != EOF)
 	{
 		if (len == 0)
-		{
-			line_counter++;
-			continue;
-		}
+		{ line_counter++; continue; }
 
-		tokenizer(line_content, &opcode_start, &opcode_end, is_alpha);
-		tokenizer(line_content, &value_start, &value_end, is_number);
+		tokenizer(line_content, &opcode_start, &opcode_end, &index, is_alpha);
+		tokenizer(line_content, &value_start, &value_end, &index, is_number);
+		index = 0;
 
 		if (opcode_start == -1 && value_start == -1)
-			continue;
+		{ line_counter++; continue; }
 
 		opcode_len = opcode_start != -1 ? (opcode_end - opcode_start) + 1 : 0;
 		value_len = value_start != -1 ? (value_end - value_start) + 1 : 0;
