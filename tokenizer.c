@@ -1,10 +1,10 @@
 #include "monty.h"
 
-void tokenizer (char *string, int *start, int *end, size_t *index, bool (*func) (char *, int))
+void tokenizer (char *string, int *start, int *end, size_t *index)
 {
 	for (; string[*index] != '\0'; (*index)++)
 	{
-		if (func(string, *index))
+		if (!is_space(string, *index))
 		{
 			*start = *index;
 			break;
@@ -12,7 +12,7 @@ void tokenizer (char *string, int *start, int *end, size_t *index, bool (*func) 
 	}
 	for (; string[*index] != '\0'; (*index)++)
 	{
-		if (func(string, *index + 1) == false)
+		if (is_space(string, *index + 1) || string[*index + 1] == '\0')
 		{
 			*end = *index;
 			++(*index);

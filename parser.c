@@ -1,11 +1,16 @@
 #include "monty.h"
 
-int get_trash(char *line, int index)
+void ensure_valid_value(char **value)
 {
-	for(; line[index] != '\0'; index++)
-		if (is_number(line, index) == false && is_space(line, index) == false)
-			return (index);
-	return (-1); /** no middle trash found **/
+	int index = 0;
+	char *work = *value;
+
+	if (!work)
+		return;
+
+	for (; work[index] != '\0'; index++)
+		if (!is_number(*value, index))
+			{ free(work); *value = NULL; break; }
 }
 
 char *get_task_details(char *line, int len, int start)
@@ -26,11 +31,10 @@ char *get_task_details(char *line, int len, int start)
 int parser (FILE *file)
 {
 	char *line_content;
-	size_t line_counter = 1, index = 0;
+	size_t line_counter = 1, index = 0, len;
 	int opcode_start = -1, opcode_end = -1;
 	int value_start = -1, value_end = -1;
 	int opcode_len, value_len;
-	size_t len; int trash_index;
 	command task;
 
 	while (getline(&line_content, &len, file) != EOF)
@@ -38,13 +42,8 @@ int parser (FILE *file)
 		if (len == 0)
 		{ line_counter++; continue; }
 
-		tokenizer(line_content, &opcode_start, &opcode_end, &index, is_alpha);
-		trash_index = index;
-		tokenizer(line_content, &value_start, &value_end, &index, is_number);
-
-		trash_index = get_trash(line_content, trash_index);
-		if (trash_index != -1 && trash_index < value_start)
-		{ value_start = -1; value_end = -1; }
+		tokenizer(line_content, &opcode_start, &opcode_end, &index);
+		tokenizer(line_content, &value_start, &value_end, &index);
 
 		if (opcode_start == -1 && value_start == -1)
 		{ line_counter++; index = 0; continue; }
@@ -61,7 +60,9 @@ int parser (FILE *file)
 		else
 			task.value = NULL;
 
+		ensure_valid_value(&task.value);
 		execute(task, line_counter);
+
 		index = 0;
 		line_counter++;
 		opcode_start = opcode_end = value_start = value_end = -1; /** reset **/

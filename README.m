@@ -34,3 +34,6 @@ monty                                                20
       
   g
 shape ;; 10
+push10;
+
+pall 10

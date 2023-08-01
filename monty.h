@@ -56,7 +56,7 @@ int getline(char **content, size_t *len, FILE *file);
 bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
-void tokenizer (char *string, int *start, int *end, size_t *index, bool (*func) (char *, int));
+void tokenizer (char *string, int *start, int *end, size_t *index);
 char *get_task_details(char *line, int len, int start);
 int execute(command task, int line_number);
 
