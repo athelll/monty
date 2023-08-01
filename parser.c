@@ -3,7 +3,7 @@
 int get_trash(char *line, int index)
 {
 	for(; line[index] != '\0'; index++)
-		if (is_alpha(line, index))
+		if (is_number(line, index) == false && is_space(line, index) == false)
 			return (index);
 	return (-1); /** no middle trash found **/
 }
@@ -47,7 +47,7 @@ int parser (FILE *file)
 		{ value_start = -1; value_end = -1; }
 
 		if (opcode_start == -1 && value_start == -1)
-		{ line_counter++; continue; }
+		{ line_counter++; index = 0; continue; }
 
 		opcode_len = opcode_start != -1 ? (opcode_end - opcode_start) + 1 : 0;
 		value_len = value_start != -1 ? (value_end - value_start) + 1 : 0;

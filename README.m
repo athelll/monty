@@ -12,10 +12,10 @@ push 2
 push 3
 pall
   
-                                                                            MONTY 
-
-                       
-
+                                                                            MONTY
+                           
+            
+ 
 push 4
   shape 10
 
@@ -29,3 +29,8 @@ there-by making reading faster. but in the current implementation its doesn't do
 
 push hard 10
 monty                                                20
+  haet s 10
+                        
+      
+  g
+shape ;; 10

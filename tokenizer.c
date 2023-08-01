@@ -15,7 +15,7 @@ void tokenizer (char *string, int *start, int *end, size_t *index, bool (*func) 
 		if (func(string, *index + 1) == false)
 		{
 			*end = *index;
-			(*index)++;
+			++(*index);
 			break;
 		}
 	}

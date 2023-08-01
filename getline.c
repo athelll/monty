@@ -15,7 +15,7 @@ int getline(char **content, size_t *len, FILE *file)
 	}
 
 	fseek(file, -(size + 1), SEEK_CUR);
-	string = (char *) malloc(size + 2);
+	string = (char *) malloc(size + 1);
 
 	while ((glyph = fgetc(file)) != '\n')
 	{
@@ -24,10 +24,9 @@ int getline(char **content, size_t *len, FILE *file)
 		string[counter++] = (char) glyph;
 	}
 
-	string[counter++] = '\n';
-	string[counter++] = '\0';
+	string[counter] = '\0';
 	*content = string;
-	*len = size == 0 ? 0 : size + 2;
 
+	*len = size == 0 ? 0 : size + 1;
 	return (EXIT_SUCCESS);
 }
