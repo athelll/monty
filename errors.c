@@ -29,3 +29,9 @@ void syntax_error(int line, char *opcode)
 	fprintf(stderr, "L%d: unknown instruction %s\n", line, opcode);
 	exit(EXIT_FAILURE);
 }
+
+void push_error(int line)
+{
+	fprintf(stderr, "L%d: push <missing value>\n", line);
+	exit(EXIT_FAILURE);
+}

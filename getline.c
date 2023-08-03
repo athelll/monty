@@ -1,6 +1,6 @@
 #include "monty.h"
 
-int getline(char **content, size_t *len, FILE *file)
+int get_line(char **content, size_t *len, FILE *file)
 {
 	int glyph;
 	int size = 0;

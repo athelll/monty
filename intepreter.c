@@ -4,10 +4,7 @@ int main (int argc, char **argv)
 {
 	char *file;
 	FILE *file_pointer;
-	stack_t *stack = malloc(sizeof(stack_t) * MAX_STACK);
 
-	if (!stack)
-		malloc_error();
 	if (argc == 1)
 		usage_error();
 
@@ -22,7 +19,6 @@ int main (int argc, char **argv)
 	if (parser(file_pointer) == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 
-	free(stack);
 	fclose(file_pointer);
 
 	return(EXIT_SUCCESS);

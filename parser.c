@@ -35,9 +35,9 @@ int parser (FILE *file)
 	int opcode_start = -1, opcode_end = -1;
 	int value_start = -1, value_end = -1;
 	int opcode_len, value_len;
-	command task;
+	task task;
 
-	while (getline(&line_content, &len, file) != EOF)
+	while (get_line(&line_content, &len, file) != EOF)
 	{
 		if (len == 0)
 		{ line_counter++; continue; }
@@ -59,9 +59,10 @@ int parser (FILE *file)
 			task.value = get_task_details(line_content, value_len, value_start);
 		else
 			task.value = NULL;
+		task.line = line_counter;
 
 		ensure_valid_value(&task.value);
-		execute(task, line_counter);
+		execute(task);
 
 		index = 0;
 		line_counter++;

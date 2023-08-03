@@ -7,9 +7,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-/** CONSTANTS **/
-#define MAX_STACK 100
-
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -26,6 +23,13 @@ typedef struct stack_s
   struct stack_s *next;
 } stack_t;
 
+typedef struct commands
+{
+	char *value;
+	char *opcode;
+	int line;
+} task;
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -37,28 +41,25 @@ typedef struct stack_s
 typedef struct instruction_s
 {
   char *opcode;
-  void (*f)(stack_t **stack, unsigned int line_number);
+  void (*f)(stack_t **stack, task task);
 } instruction_t;
 
-typedef struct commands
-{
-	char *value;
-	char *opcode;
-} command;
-
 /** Global stack variable pointer **/
-extern stack_t *stack;
 
 /** function declarations **/
 stack_t *init_stack(void);
 int parser (FILE *file);
-int getline(char **content, size_t *len, FILE *file);
+int get_line(char **content, size_t *len, FILE *file);
 bool is_alpha (char *string, int index);
 bool is_number (char *string, int index);
 bool is_space (char *string, int index);
 void tokenizer (char *string, int *start, int *end, size_t *index);
 char *get_task_details(char *line, int len, int start);
-int execute(command task, int line_number);
+int execute(task task);
+void push_stack(stack_t **stack, task task);
+void pall_stack(stack_t **stack, task task);
+
+extern stack_t* STACK;
 
 /** error handlers **/
 void malloc_error();
