@@ -32,6 +32,6 @@ void syntax_error(int line, char *opcode)
 
 void push_error(int line)
 {
-	fprintf(stderr, "L%d: push <missing value>\n", line);
+	fprintf(stderr, "L%d: usage: push integer\n", line);
 	exit(EXIT_FAILURE);
 }
