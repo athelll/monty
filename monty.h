@@ -56,6 +56,7 @@ bool is_space (char *string, int index);
 void tokenizer (char *string, int *start, int *end, size_t *index);
 char *get_task_details(char *line, int len, int start);
 int execute(task task);
+void liberate(int count, ...);
 void push_stack(stack_t **stack, task task);
 void pall_stack(stack_t **stack, task task);
 

@@ -4,6 +4,7 @@ int main (int argc, char **argv)
 {
 	char *file;
 	FILE *file_pointer;
+	stack_t *buffer;
 
 	if (argc == 1)
 		usage_error();
@@ -20,6 +21,12 @@ int main (int argc, char **argv)
 		exit(EXIT_FAILURE);
 
 	fclose(file_pointer);
+	while(STACK)
+	{
+		buffer = STACK;
+		STACK = STACK->prev;
+		free(buffer);
+	}
 
 	return(EXIT_SUCCESS);
 }

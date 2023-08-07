@@ -16,17 +16,19 @@ int get_line(char **content, size_t *len, FILE *file)
 
 	fseek(file, -(size + 1), SEEK_CUR);
 	string = (char *) malloc(size + 1);
+	if (!string)
+		malloc_error();
 
 	while ((glyph = fgetc(file)) != '\n')
 	{
 		if (glyph == EOF)
-			return (EOF);
+		{ free(string); return (EOF); }
 		string[counter++] = (char) glyph;
 	}
 
 	string[counter] = '\0';
 	*content = string;
-
 	*len = size == 0 ? 0 : size + 1;
+
 	return (EXIT_SUCCESS);
 }

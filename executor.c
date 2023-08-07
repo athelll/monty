@@ -18,6 +18,5 @@ int execute(task task)
 		}
 		index++;
 	}
-
 	return (0);
 }

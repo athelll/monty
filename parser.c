@@ -40,13 +40,13 @@ int parser (FILE *file)
 	while (get_line(&line_content, &len, file) != EOF)
 	{
 		if (len == 0)
-		{ line_counter++; continue; }
+		{ line_counter++; free(line_content); continue; }
 
 		tokenizer(line_content, &opcode_start, &opcode_end, &index);
 		tokenizer(line_content, &value_start, &value_end, &index);
 
 		if (opcode_start == -1 && value_start == -1)
-		{ line_counter++; index = 0; continue; }
+		{ line_counter++; index = 0; free(line_content); continue; }
 
 		opcode_len = opcode_start != -1 ? (opcode_end - opcode_start) + 1 : 0;
 		value_len = value_start != -1 ? (value_end - value_start) + 1 : 0;
@@ -63,6 +63,7 @@ int parser (FILE *file)
 
 		ensure_valid_value(&task.value);
 		execute(task);
+		free(line_content);
 
 		index = 0;
 		line_counter++;
