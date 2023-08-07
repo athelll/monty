@@ -6,13 +6,10 @@ int main (int argc, char **argv)
 	FILE *file_pointer;
 	stack_t *buffer;
 
-	if (argc == 1)
+	if (argc != 2)
 		usage_error();
 
 	file = argv[1];
-	if (file[strlen(file) - 1] != 'm' && file[strlen(file) - 2] != '.')
-		notmonty_error();
-
 	file_pointer = fopen(file, "r");
 	if (!file_pointer)
 		file_error(file);
