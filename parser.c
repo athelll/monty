@@ -8,6 +8,9 @@ void ensure_valid_value(char **value)
 	if (!work)
 		return;
 
+	if (work[index] == '-')
+		++index;
+
 	for (; work[index] != '\0'; index++)
 		if (!is_number(*value, index))
 			{ free(work); *value = NULL; break; }
