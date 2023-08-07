@@ -18,7 +18,7 @@ void file_error(char *file)
 	exit(EXIT_FAILURE);
 }
 
-void syntax_error(int line, char *opcode)
+void opcode_error(int line, char *opcode)
 {
 	fprintf(stderr, "L%d: unknown instruction %s\n", line, opcode);
 	exit(EXIT_FAILURE);

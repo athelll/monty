@@ -10,3 +10,4 @@ push 5
 
  
 pall
+paint

@@ -67,7 +67,7 @@ void malloc_error();
 void usage_error();
 void notmonty_error();
 void file_error(char *file);
-void syntax_error(int line, char *opcode);
+void opcode_error(int line, char *opcode);
 void push_error(int line);
 
 #endif
