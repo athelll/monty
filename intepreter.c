@@ -1,6 +1,17 @@
 #include "monty.h"
 
-int main (int argc, char **argv)
+/**
+ * main - entry point for the interpreter
+ *
+ * @argc: number of arguments passed
+ * @argv: array of argument strings.
+ *
+ * Description:
+ * Monty bytecode intepreter block schematic:
+ * entry => parser => tokenizer => assignment => execution.
+ * Return: returns EXIT_SUCCESS or EXIT_FAILURE.
+ */
+int main(int argc, char **argv)
 {
 	char *file;
 	FILE *file_pointer;
@@ -18,12 +29,11 @@ int main (int argc, char **argv)
 		exit(EXIT_FAILURE);
 
 	fclose(file_pointer);
-	while(STACK)
+	while (STACK)
 	{
 		buffer = STACK;
 		STACK = STACK->prev;
 		free(buffer);
 	}
-
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

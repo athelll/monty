@@ -1,10 +1,16 @@
 #include "monty.h"
 
+/**
+ * execute - executor: executes tasks sent to it.
+ * @task: data-structure that holds necessar data for
+ * task to be executes < task = { opcode, value, line.no. } >
+ * Return: returns 0
+ */
 int execute(task task)
 {
 	int index = 0;
 	bool opcode_found = false;
-	instruction_t execs [] = {
+	instruction_t execs[] = {
 		{"push", push_stack},
 		{"pall", pall_stack},
 		{NULL, NULL}

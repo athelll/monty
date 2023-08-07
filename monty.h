@@ -20,9 +20,15 @@ typedef struct stack_s
 {
 	int n;
 	struct stack_s *prev;
-  struct stack_s *next;
+	struct stack_s *next;
 } stack_t;
 
+/**
+ * struct commands - holds the metadata for an executable task
+ * @value: value string of task
+ * @opcode: opcode string for task
+ * @line: line number where task occurs.
+ */
 typedef struct commands
 {
 	char *value;
@@ -40,32 +46,30 @@ typedef struct commands
  */
 typedef struct instruction_s
 {
-  char *opcode;
-  void (*f)(stack_t **stack, task task);
+	char *opcode;
+	void (*f)(stack_t **stack, task task);
 } instruction_t;
-
-/** Global stack variable pointer **/
 
 /** function declarations **/
 stack_t *init_stack(void);
-int parser (FILE *file);
+int parser(FILE *file);
 int get_line(char **content, size_t *len, FILE *file);
-bool is_alpha (char *string, int index);
-bool is_number (char *string, int index);
-bool is_space (char *string, int index);
-void tokenizer (char *string, int *start, int *end, size_t *index);
+bool is_alpha(char *string, int index);
+bool is_number(char *string, int index);
+bool is_space(char *string, int index);
+void tokenizer(char *string, int *start, int *end, size_t *index);
 char *get_task_details(char *line, int len, int start);
 int execute(task task);
 void liberate(int count, ...);
 void push_stack(stack_t **stack, task task);
 void pall_stack(stack_t **stack, task task);
 
-extern stack_t* STACK;
+/** Global stack variable pointer **/
+extern stack_t *STACK;
 
 /** error handlers **/
-void malloc_error();
-void usage_error();
-void notmonty_error();
+void malloc_error(void);
+void usage_error(void);
 void file_error(char *file);
 void opcode_error(int line, char *opcode);
 void push_error(int line);

@@ -1,5 +1,10 @@
 #include "monty.h"
 
+/**
+ * push_stack - pushes new node, ontop of STACK.
+ * @stack: double pointer to top node of STACK
+ * @task: holds the info necessary to execute this exec.
+ */
 void push_stack(stack_t **stack, task task)
 {
 	stack_t *new;
@@ -31,11 +36,16 @@ void push_stack(stack_t **stack, task task)
 	}
 }
 
+/**
+ * pall_stack - prints all nodes in the STACK.
+ * @stack: double pointer to top node of STACK
+ * @task: holds the info necessary to execute this exec.
+ */
 void pall_stack(stack_t **stack, task task)
 {
 	stack_t *current = *stack;
 
-	while(current)
+	while (current)
 	{
 		printf("%d\n", current->n);
 		current = current->prev;
